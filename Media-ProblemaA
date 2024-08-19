@@ -1,0 +1,35 @@
+#include <iomanip>
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+// Aqui eu criei uma função para calcular a média de três notas
+double calcularMedia(int nota1, int nota2, int nota3) {
+  return (double)(nota1 + nota2 + nota3) / 3;
+}
+
+double encontrarKthMaior(const vector<int> &notas, int K) {
+  vector<double> medias;
+  for (int i = 0; i < notas.size(); i++) {
+    for (int j = i + 1; j < notas.size(); j++) {
+      for (int k = j + 1; k < notas.size(); k++) {
+        medias.push_back(calcularMedia(notas[i], notas[j], notas[k]));
+      }
+    }
+  }
+  sort(medias.begin(), medias.end(), greater<double>());
+  return medias[K - 1];
+}
+
+int main() {
+  int N, K;
+  while (cin >> N >> K) {
+    vector<int> notas(N);
+    for (int i = 0; i < N; i++) {
+      cin >> notas[i];
+    }
+    cout << fixed << setprecision(2) << encontrarKthMaior(notas, K) << endl;
+  }
+  return 0;
+}
